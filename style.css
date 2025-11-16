@@ -1,0 +1,144 @@
+/* --- Base Styles --- */
+:root {
+    --cell-size: 100px;
+    --border-color: #333;
+    --player-x-color: #007bff;
+    --player-o-color: #dc3545;
+    --win-color: #d4edda;
+    --hover-bg: #f8f9fa;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* --- Main Container --- */
+.container {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* --- (Optional) Scoreboard Styling --- */
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.score-player {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.score-player:first-child {
+    color: var(--player-x-color);
+}
+.score-player:last-child {
+    color: var(--player-o-color);
+}
+
+/* --- Game Board Styling --- */
+.game-board {
+    display: grid;
+    /* Create a 3x3 grid, each column/row taking 1 fractional unit */
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    
+    /* A modern way to create grid lines: */
+    /* Set the board's background to the line color */
+    background-color: var(--border-color);
+    /* Create 3px gaps between cells, showing the background color */
+    gap: 3px;
+    
+    border: 3px solid var(--border-color);
+    border-radius: 5px;
+    margin: 20px auto;
+    
+    /* Make the board responsive */
+    width: 100%;
+    max-width: 400px;
+    /* Enforce a 1:1 aspect ratio (perfect square) */
+    aspect-ratio: 1 / 1; 
+}
+
+/* --- Cell Styling --- */
+.cell {
+    background-color: #fff;
+    /* Use flexbox to center the 'X' and 'O' perfectly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Responsive font size: clamp(min, preferred, max) */
+    font-size: clamp(2.5rem, 15vw, 6rem);
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+    transition: background-color 0.2s ease;
+}
+
+/* Set specific colors for X and O */
+.cell.x {
+    color: var(--player-x-color);
+}
+.cell.o {
+    color: var(--player-o-color);
+}
+
+/* --- (Optional) Hover Effect --- */
+/* Only apply hover effect to empty cells when the game is active */
+.game-board.turn-x .cell:not(.x):not(.o):hover::before,
+.game-board.turn-o .cell:not(.x):not(.o):hover::before {
+    opacity: 0.3; /* Show a faint preview of the current player's mark */
+}
+
+/* Use JS to add 'turn-x' or 'turn-o' to the board */
+.game-board.turn-x .cell:not(.x):not(.o):hover::before {
+    content: 'X';
+    color: var(--player-x-color);
+}
+.game-board.turn-o .cell:not(.x):not(.o):hover::before {
+    content: 'O';
+    color: var(--player-o-color);
+}
+
+/* --- (Optional) Winning Cell Highlight --- */
+.cell.winning-cell {
+    background-color: var(--win-color);
+}
+
+/* --- Button Styling --- */
+#restart-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#restart-button:hover {
+    background-color: #0056b3;
+}
